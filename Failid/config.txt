@@ -1,8 +1,6 @@
 
-
-
 [NEAT]
-fitness_criterion     = max
+fitness_criterion     = avg
 max_fitness_threshold = 16
 pop_size = 100
 reset_on_extinction   = False
@@ -73,9 +71,9 @@ weight_replace_rate     = 0.1
 compatibility_threshold = 3.0
 
 [DefaultStagnation]
-species_fitness_func = max
-max_stagnation       = 20
-species_elitism      = 2
+species_fitness_func = avg
+max_stagnation       = 50
+species_elitism      = 1
 
 [DefaultReproduction]
 elitism            = 2
