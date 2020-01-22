@@ -19,6 +19,7 @@ class car(pyglet.sprite.Sprite):
         self.r = False
         self.alive = True
         self.name = name
+        self.direction = 0
         super().__init__(x=150,y=450,img=image_car)
         self.rotation = 90
 
@@ -34,24 +35,35 @@ class car(pyglet.sprite.Sprite):
         speed = 10
         if self.rotation%360 == 0:
             self.y+=speed
+            self.direction=0
         if self.rotation%360 == 45:
             self.y+=(speed/2)+1
             self.x+=(speed/2)+1
+            self.direction=1
         if self.rotation%360 == 90:
             self.x+=speed
+            self.direction=2
         if self.rotation%360 == 135:
             self.y-=(speed/2)+1
             self.x+=(speed/2)+1
+            self.direction=3
         if self.rotation%360 == 180:
             self.y-=speed
+            self.direction=4
         if self.rotation%360 == 225:
             self.y-=(speed/2)+1
             self.x-=(speed/2)+1
+            self.direction=5
         if self.rotation%360 == 270:
             self.x-=speed
+            self.direction=6
         if self.rotation%360 == 315:
             self.x-=(speed/2)+1
             self.y+=(speed/2)+1
+            self.direction=7
+
+    def GetDirection(self):
+        return self.direction
 
     def test_wall(self):
         if self.x < 125 or self.x > 675 or self.y < 125 or self.y > 475:

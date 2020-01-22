@@ -26,7 +26,7 @@ def config_fitness_threshold(name, num):
     filew.close()
 
 def calculate_inputs(distance, self, closest_point):
-    result = 0
+    result = 1
 
     if distance > 0:
         result+=4
@@ -34,7 +34,6 @@ def calculate_inputs(distance, self, closest_point):
         result+=2
     if closest_point > 0:
         result+=2
-
     return(result)
 
 def config_inputs(name, num):
@@ -71,15 +70,17 @@ def config_mainfile_inputs(distance, self, closest_point):
                     add+="car.nearest_point(i, points)[0],car.nearest_point(i, points)[1]"
                 else:
                     add+=",car.nearest_point(i, points)[0], car.nearest_point(i, points)[1]"
-            final = final + "\n" + "                output = nets[x].activate((" + add + "))"
+            if add == "":
+                add+="car.GetDirection(i)"
+            else:
+                add+=",car.GetDirection(i)"
+            final = final + "\n" + "                output = nets[x].activate((" + add +  "))"
         elif f.split("\n").index(i) == 0:
             final = final + i
         else:
             final = final + "\n" + i
-    print(add + " lisati koodi")
 
     file.close()
     filew = open("main_file.py", "w")
     filew.write(final)
-    print(final)
     filew.close()
