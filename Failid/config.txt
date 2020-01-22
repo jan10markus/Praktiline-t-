@@ -1,8 +1,10 @@
 
+
+
 [NEAT]
 fitness_criterion     = avg
-max_fitness_threshold = 16
-pop_size = 100
+max_fitness_threshold = 20
+pop_size = 60
 reset_on_extinction   = False
 
 [DefaultGenome]
@@ -46,7 +48,7 @@ node_delete_prob        = 0.2
 
 # network parameters
 num_hidden              = 0
-num_inputs = 4
+num_inputs = 5
 num_outputs             = 2
 
 # node response options
@@ -71,7 +73,7 @@ weight_replace_rate     = 0.1
 compatibility_threshold = 3.0
 
 [DefaultStagnation]
-species_fitness_func = avg
+species_fitness_func = max
 max_stagnation       = 50
 species_elitism      = 1
 

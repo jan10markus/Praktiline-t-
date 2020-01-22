@@ -1,16 +1,9 @@
-from tkinter import *
-from tkinter import ttk
-from tkinter import messagebox
-import neat
-import os
+from neat import Checkpointer
 
-from Failid.main_file import run_file
-from Failid.objects import *
-from Failid.main_file import *
 from Failid.UIdef import *
 
 window = Tk()
-window.title("Tehisintelligentsi asi lmao")
+window.title("AI")
 window.geometry("150x250")
 
 sisendid_label = ttk.Label(window, text="Sisendid neuronitele:")
@@ -34,6 +27,33 @@ populatsioon.grid(row=7,column=0, sticky=W)
 tühi1 = ttk.Label(window, text="")
 tühi1.grid(row=8,column=0,sticky=W)
 
+def load_save():
+    w = Tk()
+    w.title("Lae salvestus")
+    w.geometry("220x100")
+    failinimi_label = ttk.Label(w, text="Salvustuse nimi:")
+    failinimi_label.grid(row=0, column=0, sticky=(W, N))
+    failinimi_entry = ttk.Entry(w)
+    failinimi_entry.grid(row=0, column=1, sticky=(W, N))
+
+    def failinimi():
+        failinimi = failinimi_entry.get()
+        pop = int(populatsioon.get())
+        config_mainfile_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get())
+        config_inputs("config.txt", calculate_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get()))
+        config_fitness_threshold("config.txt", pop)
+        p = Checkpointer.restore_checkpoint(failinimi)
+        p.add_reporter(neat.StdOutReporter())
+        stats = neat.StatisticsReporter()
+        p.add_reporter(stats)
+        p.add_reporter(neat.Checkpointer(5))
+        p.run(main, pop)
+        winner = p.run(main, pop)
+        print('\nBest genome:\n{!s}'.format(winner))
+
+    failinimi_button = ttk.Button(w, text="Lae salvestus", command=failinimi)
+    failinimi_button.grid(row=1,column=1,sticky=(W,N))
+
 def run_main():
     pop = int(populatsioon.get())
     config_mainfile_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get())
@@ -51,5 +71,8 @@ def run_main():
 
 run = ttk.Button(window, text="Käivita", command=run_main)
 run.grid(row=9, column=0, sticky=W)
+
+lae = ttk.Button(window, text="Lae salvestus", command=load_save)
+lae.grid(row=11, column=0, sticky=W)
 
 mainloop()

@@ -74,6 +74,7 @@ def config_mainfile_inputs(distance, self, closest_point):
                 add+="car.GetDirection(i)"
             else:
                 add+=",car.GetDirection(i)"
+            print(add)
             final = final + "\n" + "                output = nets[x].activate((" + add +  "))"
         elif f.split("\n").index(i) == 0:
             final = final + i
