@@ -19,14 +19,14 @@ class car(pyglet.sprite.Sprite):
         self.r = False
         self.alive = True
         self.name = name
-        self.direction = 0
+        self.direction = 1
         super().__init__(x=150,y=450,img=image_car)
-        self.rotation = 90
+        self.rotation = 45
 
     def test_finish(self):
         if self.x > 600 and self.y < 201:
             self.rotation = 15
-            self.points+=10
+            self.points+=1
             self.x = 0
             self.y = 0
             self.alive = False
