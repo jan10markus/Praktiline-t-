@@ -1,4 +1,4 @@
-
+import time as t
 import neat
 import os
 from Failid.objects import *
@@ -7,7 +7,7 @@ def main(genomes, config):
     ge = []
     cars = []
     points = []
-    time = Timer(60, 1, 200)
+    time = Timer(60, 1, 50)
     result = []
     for _,g in genomes:
         net = neat.nn.FeedForwardNetwork.create(g, config)
@@ -15,30 +15,25 @@ def main(genomes, config):
         cars.append(car(g))
         g.fitness = 0
         ge.append(g)
+    carsamount = Timer(60, len(ge), 50)
     window = pyglet.window.Window(800, 600)
+    window.set_location(100,100)
     image_bg = pyglet.resource.image("map.png")
     points_map1(cars, points)
+    integer = 0
+
     @window.event
     def update(dt):
-        window.clear()
-        Timer.addTime(time)
-        if time.frame >= time.limit:
-            time.frame = 1
+        if time.frame >= 189:
             window.close()
-            pyglet.app.exit()
-            results = open("results.txt", "r")
-            res = results.read()
-            results.close()
-            resultss = open("results.txt", "w")
-            resultss.write(res + "\n" + str(sum(result) / len(result)))
-            resultss.close()
+
     @window.event
     def on_draw():
         window.clear()
         image_bg.blit(0, 0)
         for x,i in enumerate(cars):
             if time.frame%5 == 0:
-                output = nets[x].activate((car.distance(i)[0], car.distance(i)[1], car.distance(i)[2], car.distance(i)[3],car.GetDirection(i)))
+                output = nets[x].activate((car.distance(i)[0], car.distance(i)[1], car.distance(i)[2], car.distance(i)[3],car.GetDirection(i), i.l, i.r))
                 if output[0] > 0.5:
                     i.l = True
                 if output[1] > 0.5:
@@ -67,8 +62,21 @@ def main(genomes, config):
                 i.draw()
             if i.existence == 0:
                 points.remove(i)
-    pyglet.clock.schedule_interval(update, 1/30.0)
+        if integer == 0:
+            carsamount.frame = len(cars)
+            Timer.addTime(time)
+            if time.frame > 190:
+                carsamount.frame = -1
+                time.frame = -100000
+                pyglet.app.exit()
+                time.frame = 1
+                print("kill")
+        else:
+            print("notin")
+
+    pyglet.clock.schedule_interval(update, 0.01)
     pyglet.app.run()
+
 def runn(config_file, pop):
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,

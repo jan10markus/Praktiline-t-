@@ -59,6 +59,7 @@ def run_main():
     config_mainfile_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get())
     config_inputs("config.txt", calculate_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get()))
     config_fitness_threshold("config.txt", pop)
+    window.destroy()
     run_file(pop)
 
     """"try:

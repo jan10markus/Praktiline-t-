@@ -26,7 +26,7 @@ def config_fitness_threshold(name, num):
     filew.close()
 
 def calculate_inputs(distance, self, closest_point):
-    result = 1
+    result = 3
 
     if distance > 0:
         result+=4
@@ -71,9 +71,9 @@ def config_mainfile_inputs(distance, self, closest_point):
                 else:
                     add+=",car.nearest_point(i, points)[0], car.nearest_point(i, points)[1]"
             if add == "":
-                add+="car.GetDirection(i)"
+                add+="car.GetDirection(i), i.l, i.r"
             else:
-                add+=",car.GetDirection(i)"
+                add+=",car.GetDirection(i), i.l, i.r"
             print(add)
             final = final + "\n" + "                output = nets[x].activate((" + add +  "))"
         elif f.split("\n").index(i) == 0:
