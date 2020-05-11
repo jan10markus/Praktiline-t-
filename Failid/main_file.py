@@ -33,7 +33,7 @@ def main(genomes, config):
         image_bg.blit(0, 0)
         for x,i in enumerate(cars):
             if time.frame%5 == 0:
-                output = nets[x].activate((car.distance(i)[0], car.distance(i)[1], car.distance(i)[2], car.distance(i)[3],i.x,i.y,car.GetDirection(i), i.l, i.r))
+                output = nets[x].activate([car.distance(i)[0], car.distance(i)[1], car.distance(i)[2], car.distance(i)[3],time.frame])
                 if output[0] > 0.5:
                     i.l = True
                 if output[1] > 0.5:
@@ -47,7 +47,6 @@ def main(genomes, config):
                 i.r = False
             if i.rotation == 10:
                 result.append(i.points)
-                ge[x].fitness-=1
                 cars.pop(x)
                 nets.pop(x)
                 ge.pop(x)
@@ -70,9 +69,6 @@ def main(genomes, config):
                 time.frame = -100000
                 pyglet.app.exit()
                 time.frame = 1
-                print("kill")
-        else:
-            print("notin")
 
     pyglet.clock.schedule_interval(update, 0.01)
     pyglet.app.run()

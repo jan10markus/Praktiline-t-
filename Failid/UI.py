@@ -4,9 +4,9 @@ from Failid.UIdef import *
 
 window = Tk()
 window.title("AI")
-window.geometry("150x250")
+window.geometry("150x260")
 
-sisendid_label = ttk.Label(window, text="Sisendid neuronitele:")
+sisendid_label = ttk.Label(window, text="Sisendid:")
 sisendid_label.grid(row=0, column=0, sticky=(W,N))
 
 kaugus = IntVar()
@@ -15,17 +15,20 @@ e_asukoht = IntVar()
 Checkbutton(window, text="Enda asukoht", variable=e_asukoht).grid(row=2, column=0, sticky=W)
 p_asukoht = IntVar()
 Checkbutton(window, text="Lähima punkti asukoht", variable=p_asukoht).grid(row=3, column=0, sticky=W)
-
-tühi = ttk.Label(window, text="")
-tühi.grid(row=5,column=0,sticky=W)
+suund = IntVar()
+Checkbutton(window, text="Enda suund", variable=suund).grid(row=4,column=0,sticky=W)
+punktid = IntVar()
+Checkbutton(window, text="Enda punktide kogus", variable=punktid).grid(row=5,column=0,sticky=W)
+aeg = IntVar()
+Checkbutton(window, text="Aeg (mitmes kaader)", variable=aeg).grid(row=6,column=0,sticky=W)
 
 populatsioon_label = ttk.Label(window, text="Populatsiooni suurus:")
-populatsioon_label.grid(row=6,column=0, sticky=W)
+populatsioon_label.grid(row=7,column=0, sticky=W)
 populatsioon = ttk.Entry(window)
-populatsioon.grid(row=7,column=0, sticky=W)
+populatsioon.grid(row=8,column=0, sticky=W)
 
 tühi1 = ttk.Label(window, text="")
-tühi1.grid(row=8,column=0,sticky=W)
+tühi1.grid(row=9,column=0,sticky=W)
 
 def load_save():
     w = Tk()
@@ -39,8 +42,8 @@ def load_save():
     def failinimi():
         failinimi = failinimi_entry.get()
         pop = int(populatsioon.get())
-        config_mainfile_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get())
-        config_inputs("config.txt", calculate_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get()))
+        config_mainfile_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get(), suund.get(),punktid.get(), aeg.get())
+        config_inputs("config.txt", calculate_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get(), suund.get(),punktid.get(), aeg.get()))
         config_fitness_threshold("config.txt", pop)
         p = Checkpointer.restore_checkpoint(failinimi)
         p.add_reporter(neat.StdOutReporter())
@@ -56,10 +59,11 @@ def load_save():
 
 def run_main():
     pop = int(populatsioon.get())
-    config_mainfile_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get())
-    config_inputs("config.txt", calculate_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get()))
+    config_mainfile_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get(), suund.get(), punktid.get(), aeg.get())
+    config_inputs("config.txt", calculate_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get(), suund.get(), punktid.get(), aeg.get()))
     config_fitness_threshold("config.txt", pop)
     window.destroy()
+    from main_file import run_file
     run_file(pop)
 
     """"try:

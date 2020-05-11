@@ -19,7 +19,7 @@ class car(pyglet.sprite.Sprite):
         self.r = False
         self.alive = True
         self.name = name
-        self.direction = 2
+        self.direction = 0
         super().__init__(x=150,y=450,img=image_car)
         self.rotation = 90
 
@@ -153,7 +153,8 @@ def points_map1(cars, points):
         #points.append(point_pos(650,375, image_wall, j.name))
         #points.append(point_pos(150, 225, image_wall, j.name))
 
-        for i in range(0, 2):
+        for i in range(0, 1):
+            xa = 650
             points.append(point_pos(xa, 450, image_wall, j.name))
             xa += 250
 

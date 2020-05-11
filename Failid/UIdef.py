@@ -25,8 +25,8 @@ def config_fitness_threshold(name, num):
     filew.write(final)
     filew.close()
 
-def calculate_inputs(distance, self, closest_point):
-    result = 3
+def calculate_inputs(distance, self, closest_point, direction, points, time):
+    result = 0
 
     if distance > 0:
         result+=4
@@ -34,6 +34,12 @@ def calculate_inputs(distance, self, closest_point):
         result+=2
     if closest_point > 0:
         result+=2
+    if direction > 0:
+        result+=1
+    if points > 0:
+        result+=1
+    if time > 0:
+        result+=1
     return(result)
 
 def config_inputs(name, num):
@@ -51,7 +57,7 @@ def config_inputs(name, num):
     filew.write(final)
     filew.close()
 
-def config_mainfile_inputs(distance, self, closest_point):
+def config_mainfile_inputs(distance, self, closest_point, direction, points, time):
     file = open("main_file.py", "r")
     f = file.read()
     final = ""
@@ -66,16 +72,27 @@ def config_mainfile_inputs(distance, self, closest_point):
                 if distance == 1:
                     add+=",i.x,i.y"
             if closest_point > 0:
-                if distance == 0 and self == 0:
+                if add == "":
                     add+="car.nearest_point(i, points)[0],car.nearest_point(i, points)[1]"
                 else:
                     add+=",car.nearest_point(i, points)[0], car.nearest_point(i, points)[1]"
-            if add == "":
-                add+="car.GetDirection(i), i.l, i.r"
-            else:
-                add+=",car.GetDirection(i), i.l, i.r"
+            if direction > 0:
+                if add == "":
+                    add+="i.direction"
+                else:
+                    add+=",i.direction"
+            if points > 0:
+                if add == "":
+                    add+="i.points"
+                else:
+                    add+=",i.points"
+            if time > 0:
+                if add == "":
+                    add+="time.frame"
+                else:
+                    add+=",time.frame"
             print(add)
-            final = final + "\n" + "                output = nets[x].activate((" + add +  "))"
+            final = final + "\n" + "                output = nets[x].activate([" + add +  "])"
         elif f.split("\n").index(i) == 0:
             final = final + i
         else:
