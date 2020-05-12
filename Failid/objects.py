@@ -1,3 +1,5 @@
+#Autor Jan Markus Rokka
+
 import pyglet
 
 image_car = pyglet.resource.image("carnool.png")
@@ -12,6 +14,7 @@ death = pyglet.resource.image("death.png")
 death.anchor_x = death.width//2
 death.anchor_y = death.height//2
 
+#närvivõrgu pool juhitava objekti klass
 class car(pyglet.sprite.Sprite):
     def __init__(self,name):
         self.points = 0
@@ -170,6 +173,7 @@ def points_map1(cars, points):
             points.append(point_pos(xa, 150, image_wall, j.name))
             xa += 200
 
+#Klass, mis toimib kaadrite lugejana
 class Timer():
     def __init__(self, frames_in_second, frame, limit):
         self.frame = float(frame)

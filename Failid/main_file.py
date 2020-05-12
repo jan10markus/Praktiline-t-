@@ -1,7 +1,12 @@
+#Autor Jan Markus Rokka
+#Mõningane eeskuju https://neat-python.readthedocs.io/en/latest/
+
 import time as t
 import neat
 import os
 from Failid.objects import *
+
+#genoomide sobilikkust arvutav funktsioon
 def main(genomes, config):
     nets = []
     ge = []
@@ -73,6 +78,7 @@ def main(genomes, config):
     pyglet.clock.schedule_interval(update, 0.01)
     pyglet.app.run()
 
+#algoritmi käivitamine
 def runn(config_file, pop):
     config = neat.Config(neat.DefaultGenome, neat.DefaultReproduction,
                          neat.DefaultSpeciesSet, neat.DefaultStagnation,

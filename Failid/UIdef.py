@@ -1,3 +1,6 @@
+#Autor Jan Markus Rokka
+#funktsioonid, mis muudavat main_file.py'i süntaksi
+
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox

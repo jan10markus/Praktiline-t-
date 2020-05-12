@@ -1,7 +1,11 @@
+#Autor Jan Markus Rokka
+#Kasutajaliides
+
 from neat import Checkpointer
 
 from Failid.UIdef import *
 
+#kõige loomine (aken, nupud jne.)
 window = Tk()
 window.title("AI")
 window.geometry("150x260")
@@ -30,6 +34,7 @@ populatsioon.grid(row=8,column=0, sticky=W)
 tühi1 = ttk.Label(window, text="")
 tühi1.grid(row=9,column=0,sticky=W)
 
+#salvestuse laadimine
 def load_save():
     w = Tk()
     w.title("Lae salvestus")
@@ -57,6 +62,7 @@ def load_save():
     failinimi_button = ttk.Button(w, text="Lae salvestus", command=failinimi)
     failinimi_button.grid(row=1,column=1,sticky=(W,N))
 
+#algoritmi käivitamine
 def run_main():
     pop = int(populatsioon.get())
     config_mainfile_inputs(kaugus.get(), e_asukoht.get(), p_asukoht.get(), suund.get(), punktid.get(), aeg.get())
