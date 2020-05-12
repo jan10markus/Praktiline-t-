@@ -38,7 +38,7 @@ def main(genomes, config):
         image_bg.blit(0, 0)
         for x,i in enumerate(cars):
             if time.frame%5 == 0:
-                output = nets[x].activate([car.distance(i)[0], car.distance(i)[1], car.distance(i)[2], car.distance(i)[3],time.frame])
+                output = nets[x].activate([car.distance(i)[0], car.distance(i)[1], car.distance(i)[2], car.distance(i)[3],i.x,i.y,car.nearest_point(i, points)[0], car.nearest_point(i, points)[1],i.direction,i.points,time.frame])
                 if output[0] > 0.5:
                     i.l = True
                 if output[1] > 0.5:
